@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucas Ramalho Albuquerque - Cartão de Visita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .card-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            perspective: 1000px;
+        }
+
+        .business-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-radius: 20px;
+            padding: 40px 35px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px -12px rgba(220, 38, 38, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            animation: cardEntry 0.8s ease-out;
+        }
+
+        @keyframes cardEntry {
+            from {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        /* Efeito de brilho vermelho no fundo */
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Cabeçalho */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .name::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #dc2626, transparent);
+            border-radius: 2px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #dc2626;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tagline::before,
+        .tagline::after {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: #dc2626;
+            opacity: 0.5;
+        }
+
+        /* Linha divisória */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.5), transparent);
+            margin: 25px 0;
+        }
+
+        /* Serviços */
+        .services {
+            margin-bottom: 30px;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .service-item:hover {
+            transform: translateX(5px);
+            background: rgba(220, 38, 38, 0.05);
+            margin: 0 -10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 8px;
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dc2626;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover .service-icon {
+            background: #dc2626;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .service-text {
+            color: #e5e5e5;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        /* Diferencial */
+        .highlight {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(220, 38, 38, 0.05));
+            border-left: 4px solid #dc2626;
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-size: 4rem;
+            color: rgba(220, 38, 38, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .highlight-text {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contato */
+        .contact-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #dc2626, transparent);
+        }
+
+        .contact-label {
+            color: #888;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .phone {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .phone:hover {
+            color: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #25d366;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Elementos decorativos */
+        .tech-pattern {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: #dc2626;
+            opacity: 0.3;
+        }
+
+        .circuit-line:nth-child(1) {
+            width: 2px;
+            height: 40px;
+            top: 0;
+            right: 30px;
+        }
+
+        .circuit-line:nth-child(2) {
+            width: 30px;
+            height: 2px;
+            top: 40px;
+            right: 0;
+        }
+
+        /* Responsivo */
+        @media (max-width: 480px) {
+            .business-card {
+                padding: 30px 25px;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+            }
+            
+            .phone {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animação de entrada dos itens */
+        .service-item {
+            opacity: 0;
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        .service-item:nth-child(1) { animation-delay: 0.2s; }
+        .service-item:nth-child(2) { animation-delay: 0.3s; }
+        .service-item:nth-child(3) { animation-delay: 0.4s; }
+        .service-item:nth-child(4) { animation-delay: 0.5s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Botão de download */
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: transparent;
+            border: 2px solid #dc2626;
+            color: #dc2626;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .btn-primary {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b91c1c;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="business-card">
+            <!-- Elementos decorativos -->
+            <div class="tech-pattern">
+                <div class="circuit-line"></div>
+                <div class="circuit-line"></div>
+            </div>
+
+            <div class="content">
+                <!-- Cabeçalho -->
+                <div class="header">
+                    <h1 class="name">Lucas Ramalho<br>Albuquerque</h1>
+                    <div class="tagline">Especialista em Manutenção e Redes</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Serviços -->
+                <div class="services">
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <span class="service-text">Montagem e manutenção de PCs e notebooks</span>
+                    </div>
+                    
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <span class="service-text">Instalação de cabeamento estruturado</span>
+                    </div>
+                    
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <span class="service-text">Otimização e organização de rede</span>
+                    </div>
+                    
+                    <div class="service-item">
+                        <div class="service-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <span class="service-text">Configuração de rede Wi-Fi</span>
+                    </div>
+                </div>
+
+                <!-- Diferencial -->
+                <div class="highlight">
+                    <div class="highlight-text">Atendimento rápido e solução eficiente</div>
+                </div>
+
+                <!-- Contato -->
+                <div class="contact-section">
+                    <span class="contact-label">Entre em contato</span>
+                    <a href="tel:+5511954207666" class="phone">
+                        <i class="fas fa-phone-alt" style="margin-right: 10px; color: #dc2626;"></i>
+                        (11) 95420-7666
+                    </a>
+                    <a href="https://wa.me/5511954207666" class="whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp disponível
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões de ação -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick="saveCard()">
+                <i class="fas fa-download"></i>
+                Salvar Cartão
+            </button>
+            <button class="btn" onclick="shareCard()">
+                <i class="fas fa-share-alt"></i>
+                Compartilhar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Animação suave ao carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.querySelector('.business-card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.8s ease-out';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        // Função para salvar (simula download)
+        function saveCard() {
+            // Criar um canvas temporário para gerar imagem
+            alert('Para salvar: Pressione Ctrl+P (ou Cmd+P no Mac) e escolha "Salvar como PDF" para guardar seu cartão de visita!');
+        }
+
+        // Função para compartilhar
+        async function shareCard() {
+            const shareData = {
+                title: 'Lucas Ramalho Albuquerque - Especialista em TI',
+                text: 'Especialista em Manutenção e Redes. Atendimento rápido e solução eficiente. 📞 (11) 95420-7666',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Erro ao compartilhar:', err);
+                }
+            } else {
+                // Copiar para área de transferência
+                const text = `${shareData.title}\n${shareData.text}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Informações copiadas para a área de transferência!');
+                });
+            }
+        }
+
+        // Efeito 3D no mouse move
+        document.querySelector('.business-card').addEventListener('mousemove', function(e) {
+            const card = this;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        document.querySelector('.business-card').addEventListener('mouseleave', function() {
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+    </script>
+</body>
+</html>
